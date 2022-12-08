@@ -1,6 +1,6 @@
 # go-tify 🎵
 
-#### A simple CLI tool which let's you control your Spotify player from the terminal, built using Go 💙.
+A simple CLI tool which let's you control your Spotify player from the terminal, built using Go 💙
 
 ## Usage / Development
 Since this is a pet project, I don't plan to release it, this was just a fun way to learn Go. However, if you want to use it, you can clone the repo and run it locally.
