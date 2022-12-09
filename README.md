@@ -8,6 +8,12 @@ Since this is a pet project, I don't plan to release it, this was just a fun way
 ### Prerequisites
 - Go
 - Spotify Premium Account
+- A registered Spotify developer app
+
+### Setting up the Spotify app 
+- Create a Spotify app in the [developer dashboard](https://developer.spotify.com/dashboard/applications), call it anything you like.
+- Edit the app and add `http://localhost:420` as a valid redirect URI
+- Copy the client ID and client secret into your .env file.
 
 ### Installation
 - Copy the `.env.example` file to `.env` and fill in the values
