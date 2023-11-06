@@ -16,7 +16,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.21' # Set this to the Go version you want to use
+          go-version: '1.21'
 
       - name: Build Binaries
         run: |
@@ -52,14 +52,13 @@ jobs:
               GOOS=$os GOARCH=$arch go build -o $output .
               zip $output.zip $output
               asset_path=./$output.zip
-              asset_name=$output.zip
-              echo "Uploading $asset_name"
+              asset_name=$(basename $asset_path)
 
               curl \
               -X POST \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: $(file -b --mime-type $asset_path)" \
+              -H "Content-Type: application/octet-stream" \
               --data-binary @$asset_path \
-              "${{ steps.create_release.outputs.upload_url }}?name=$(basename $asset_path)"
+              "${{ steps.create_release.outputs.upload_url }}?name=$asset_name"
             done
           done
