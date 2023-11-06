@@ -1,7 +1,7 @@
 package fetchers
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -29,7 +29,7 @@ func Play(access_token string) {
 
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	println(string(body))
 }

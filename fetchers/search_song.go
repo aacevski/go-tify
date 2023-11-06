@@ -2,7 +2,7 @@ package fetchers
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -99,7 +99,7 @@ func Search_Song_Raw(access_token string, song string) SpotifyTrackReponse {
 	var trackReponse SpotifyTrackReponse
 
 	// Read the response body into a byte slice.
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		// Handle the error here.
 	}

@@ -3,7 +3,7 @@ package spotify
 import (
 	"encoding/base64"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 
@@ -49,7 +49,7 @@ func Fetch_Access_Token(code string) string {
 
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(body), &result)

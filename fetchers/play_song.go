@@ -1,7 +1,7 @@
 package fetchers
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 )
@@ -20,7 +20,7 @@ func Play_Song(access_token string, song string) {
 
 	req, _ := http.NewRequest("PUT", url, nil)
 
-	req.Body = ioutil.NopCloser(strings.NewReader(`{"context_uri": "` + context_uri + `"}`))
+	req.Body = io.NopCloser(strings.NewReader(`{"context_uri": "` + context_uri + `"}`))
 
 	for key, value := range headers {
 		req.Header.Add(key, value)
@@ -34,7 +34,7 @@ func Play_Song(access_token string, song string) {
 
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 
 	println(string(body))
 }
@@ -51,7 +51,7 @@ func PlayUri(access_token string, track string) {
 
 	req, _ := http.NewRequest("PUT", url, nil)
 
-	req.Body = ioutil.NopCloser(strings.NewReader(`{"uris": ["` + track + `"]}`))
+	req.Body = io.NopCloser(strings.NewReader(`{"uris": ["` + track + `"]}`))
 
 	for key, value := range headers {
 		req.Header.Add(key, value)

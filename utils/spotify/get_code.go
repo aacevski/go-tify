@@ -4,16 +4,16 @@ import (
 	"strings"
 
 	"os"
-	"github.com/joho/godotenv"
+
 	"github.com/aacevski/go-tify/utils/url"
+	"github.com/joho/godotenv"
 	"github.com/manifoldco/promptui"
 	"github.com/pkg/browser"
 )
 
 func Get_Code() string {
-	// Seperate scopes with space (encoded which is %20)
 	scopes := strings.Join(Get_Scopes(), "%20")
-	
+
 	godotenv.Load(".env")
 	client_id := os.Getenv("SPOTIFY_CLIENT_ID")
 
