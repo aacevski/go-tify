@@ -52,13 +52,13 @@ jobs:
               GOOS=$os GOARCH=$arch go build -o $output .
               zip $output.zip $output
               asset_path=./$output.zip
-              asset_name=$(basename $asset_path)
+              asset_name=$(basename "$asset_path")
 
               curl \
-              -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type: application/octet-stream" \
-              --data-binary @$asset_path \
-              "${{ steps.create_release.outputs.upload_url }}?name=$asset_name"
+                -X POST \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @"$asset_path" \
+                "${{ steps.create_release.outputs.upload_url }}?name=${asset_name}"
             done
           done
