@@ -3,7 +3,7 @@ name: CI to Release
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -22,11 +22,10 @@ jobs:
         run: |
           # Here you would call a script or make targets to build your binaries
           # e.g., make build-all
-          go build
 
       - name: Generate Release Version
         id: version
-        run: echo "::set-output name=version::$(date +'%Y%m%d%H%M%S')"
+        run: echo "VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -34,39 +33,33 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
 
-      # Use a matrix to build for multiple OSes and architectures
-      - name: Build Matrix
-        uses: actions/setup-go@v2
-        with:
-          go-version: '1.18'
-        run: go build -o go-tify-${{ matrix.os }}-${{ matrix.arch }}${{ matrix.extension }}
-        env:
-          GOOS: ${{ matrix.os }}
-          GOARCH: ${{ matrix.arch }}
-        strategy:
-          matrix:
-            include:
-              - os: linux
-                arch: amd64
-                extension: ''
-              - os: windows
-                arch: amd64
-                extension: '.exe'
-              - os: darwin
-                arch: amd64
-                extension: ''
-      # Upload artifacts
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./go-tify-${{ matrix.os }}-${{ matrix.arch }}${{ matrix.extension }}
-          asset_name: go-tify-${{ matrix.os }}-${{ matrix.arch }}${{ matrix.extension }}
-          asset_content_type: application/octet-stream
+      - name: Build and upload assets
+        run: |
+          matrixos=('linux' 'windows' 'darwin')
+          matrixarch=('amd64')
+          for os in "${matrixos[@]}"; do
+            for arch in "${matrixarch[@]}"; do
+              extension=''
+              if [ "$os" == "windows" ]; then
+                extension='.exe'
+              fi
+              output="go-tify-${os}-${arch}${extension}"
+              GOOS=$os GOARCH=$arch go build -o $output .
+              zip $output.zip $output
+              asset_path=./$output.zip
+              asset_name=$output.zip
+              echo "Uploading $asset_name"
+
+              curl \
+              -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: $(file -b --mime-type $asset_path)" \
+              --data-binary @$asset_path \
+              "${{ steps.create_release.outputs.upload_url }}?name=$(basename $asset_path)"
+            done
+          done
