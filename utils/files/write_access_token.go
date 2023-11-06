@@ -2,17 +2,13 @@ package utils
 
 import (
 	"log"
-	"os"
+
+	"github.com/zalando/go-keyring"
 )
 
-func Write_Access_Token(access_token string) {
-	f, err := os.Create("access_token.txt")
-
+func WriteAccessToken(access_token string) {
+	err := keyring.Set(serviceName, accountName, access_token)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	defer f.Close()
-
-	f.WriteString(access_token)
 }

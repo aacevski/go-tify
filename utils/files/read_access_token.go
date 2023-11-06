@@ -1,23 +1,15 @@
 package utils
 
 import (
-	"bufio"
 	"log"
-	"os"
+
+	"github.com/zalando/go-keyring"
 )
 
-func Read_Access_Token() string {
-	file, err := os.Open("access_token.txt")
-
+func ReadAccessToken() string {
+	access_token, err := keyring.Get(serviceName, accountName)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-
-	scanner.Scan()
-
-	return scanner.Text()
+	return access_token
 }

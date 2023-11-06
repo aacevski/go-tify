@@ -32,14 +32,14 @@ func (userInterface UserInterface) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "enter":
 			if userInterface.focusIndex == 1 {
 				selectedRow := userInterface.table.SelectedRow()
-				fetchers.PlayUri(utils.Read_Access_Token(), selectedRow[3])
+				fetchers.PlayUri(utils.ReadAccessToken(), selectedRow[3])
 			}
 			if userInterface.focusIndex == 0 {
 				if userInterface.textInput.Value() == "" {
 					return userInterface, nil
 				}
 
-				res := fetchers.Search_Song_Rows(utils.Read_Access_Token(), userInterface.textInput.Value())
+				res := fetchers.Search_Song_Rows(utils.ReadAccessToken(), userInterface.textInput.Value())
 				userInterface.rows = res
 				userInterface.focusIndex = 1
 			}
@@ -101,7 +101,7 @@ func Build() {
 		{Title: "Track#", Width: 40},
 	}
 
-	rows := fetchers.Search_Song_Rows(utils.Read_Access_Token(), "Killer Queen")
+	rows := fetchers.Search_Song_Rows(utils.ReadAccessToken(), "Killer Queen")
 	t := table.New(
 		table.WithColumns(columns),
 		table.WithRows(rows),

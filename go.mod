@@ -6,6 +6,7 @@ toolchain go1.21.3
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
+	github.com/alessio/shellescape v1.4.2 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52 v1.0.3 // indirect
 	github.com/bep/godartsass v1.2.0 // indirect
@@ -19,9 +20,11 @@ require (
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/cosmtrek/air v1.49.0 // indirect
 	github.com/creack/pty v1.1.20 // indirect
+	github.com/danieljoos/wincred v1.2.0 // indirect
 	github.com/fatih/color v1.16.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/githubnemo/CompileDaemon v1.4.0 // indirect
+	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/gohugoio/hugo v0.120.3 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/joho/godotenv v1.4.0 // indirect
@@ -44,6 +47,7 @@ require (
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tdewolff/parse/v2 v2.7.4 // indirect
+	github.com/zalando/go-keyring v0.2.3 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211 // indirect
 	golang.org/x/text v0.14.0 // indirect
