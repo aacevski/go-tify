@@ -3,7 +3,7 @@ name: CI to Release
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
